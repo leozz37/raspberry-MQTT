@@ -15,6 +15,12 @@ The project is separeted in four parts:
 
 All of them are inside a Docker, you can run with `docker-compose`.
 
+## Raspberry
+
+Connect a led in the following pins:
+
+![led](resources/images/led.jpg)
+
 ## Installing Dependencies
 
 You need both [Docker](https://www.docker.com/) and [docker-compose](https://docs.docker.com/compose/install/) installed on your Raspberry. If you are not using Docker, you need [Go](https://golang.org/doc/install), [GCC](https://gcc.gnu.org/), [Python3](https://www.python.org/download/releases/3.0/) and [Mosquitto MQTT Broker](https://mosquitto.org/).
