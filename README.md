@@ -16,6 +16,29 @@ The project is separeted in four parts:
 
 All of them are inside a Docker, you can run with `docker-compose`.
 
+## Resources
+
+For each service:
+
+- **Raspberry center control:**
+  - We accessed the Raspberry through SSH;
+  - We're running all services inside Docker containers;
+  - We control the led state and sensor values through a REST API;
+  - The service that controls the led state also receive commands to set the broker host, topics and sensor refresh time, through serial;
+- **API REST:**
+  - We used a Golang service to make REST API to control the led and get the sensor values;
+  - You can setup the PORT in the `.env` file or setting an environment variable `$ export PORT=8000`;
+- **Broker Settings Configurator:**
+  - Written in Python;
+  - Runs forever, getting the following values:
+    - hostname;
+    - led topic;
+    - sensor topic;
+    - sensor refresh time;
+- **Eclipse Mosquitto**:
+  - MQTT Broker;
+  - Running inside a Docker container, but you can install it on your system;
+
 ## Raspberry
 
 Connect a led in the following pins:
