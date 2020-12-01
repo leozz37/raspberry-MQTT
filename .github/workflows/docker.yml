@@ -1,0 +1,41 @@
+name: Docker
+
+on:
+  push:
+    branches: [ master, develop ]
+  pull_request:
+    branches: [ master, develop ]
+
+jobs:
+  Go:
+    name: Go
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out code into the Go module directory
+      uses: actions/checkout@v2
+
+    - name: Build Go Image
+      working-directory: ./src/control
+      run: docker build . -t control
+
+  C:
+    name: C
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out code into the Go module directory
+      uses: actions/checkout@v2
+
+    - name: Build C Image
+      working-directory: ./src/raspberry
+      run: docker build . -t rasp
+
+  Python:
+    name: Python
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out code into the Go module directory
+      uses: actions/checkout@v2
+
+    - name: Build C Image
+      working-directory: ./src/sw-config
+      run: docker build . -t sw
