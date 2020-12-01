@@ -1,0 +1,24 @@
+name: C
+
+on:
+  push: {}
+  pull_request: {}
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: Check out code into the Go module directory
+      uses: actions/checkout@v2
+
+    - name: Install dependencies
+      working-directory: ./src/raspberry/scripts
+      run: |
+        chmod +x ./install-deps.sh
+        ./install-deps.sh
+
+    - name: Build
+      working-directory: ./src/raspberry
+      run: gcc main.c -o rasp -lpaho-mqtt3c -I/usr/local/include -L/usr/local/lib -lwiringPi -Wall
