@@ -15,6 +15,6 @@ RUN chmod +x ./install-deps.sh
 RUN sudo ./install-deps.sh
 
 WORKDIR /app
-RUN gcc main.c -o mqtt_exemplo -lpaho-mqtt3c -I/usr/local/include -L/usr/local/lib -lwiringPi -pthread -lpthread -Wall
+RUN gcc main.c -o mqtt_exemplo -lpaho-mqtt3c -I/usr/local/include -L/usr/local/lib -lwiringPi -pthread -lrt -lm -lcrypt -lpthread -Wall
 
 CMD [ "./rasp" ]
