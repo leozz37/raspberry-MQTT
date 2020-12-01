@@ -1,0 +1,11 @@
+version: "3.8"
+
+services:
+  control:
+    build: ./control
+    image: leozz37/control
+    container_name: control
+    environment:
+      PORT: 8000
+    ports:
+      - 8000:8000
