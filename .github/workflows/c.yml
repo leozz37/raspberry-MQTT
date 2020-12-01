@@ -1,0 +1,24 @@
+name: C
+
+on:
+  push: {}
+  pull_request: {}
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: Checkout code repository
+      uses: actions/checkout@v2
+
+    - name: Get dependencies
+      working-directory: ./src/raspberry/scripts
+      run: |
+        chmod +x ./install-deps.sh
+        sudo ./install-deps.sh
+
+    - name: Build
+      working-directory: ./src/raspberry
+      run: gcc main.c -o mqtt_exemplo -lpaho-mqtt3c -I/usr/local/include -L/usr/local/lib -lwiringPi -pthread -lpthread -Wall
