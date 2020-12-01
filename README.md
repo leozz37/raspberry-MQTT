@@ -2,6 +2,10 @@
 
 Raspberry MQTT example
 
+## Dependencies
+
+You need both [Docker](https://www.docker.com/) and [docker-compose](https://docs.docker.com/compose/install/) installed on your Raspberry. If you are not using Docker, you need [Go](https://golang.org/doc/install) and [Mosquitto MQTT Broker](https://mosquitto.org/).
+
 ## Controle
 
 ### Running
@@ -32,4 +36,12 @@ To run it set a environment variable `PORT` with the port you wanna use and, do 
 $ export PORT=8000
 
 $ docker run -p $PORT:$PORT -e PORT=$PORT control
+```
+
+### Docker compose
+
+To run all the project services, do the following:
+
+```shell
+$ docker-compose up
 ```
