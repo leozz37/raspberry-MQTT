@@ -17,8 +17,8 @@ jobs:
       working-directory: ./src/raspberry/scripts
       run: |
         sudo chmod +x ./install-deps.sh
-        sudo ./install-deps.sh
+        ./install-deps.sh
 
     - name: Build
       working-directory: ./src/raspberry
-      run: sudo gcc main.c -o rasp -lpaho-mqtt3c -I/usr/local/include -L/usr/local/lib -lwiringPi -Wall
+      run: gcc main.c -o rasp -lpaho-mqtt3c -I/usr/local/include -L/usr/local/lib -lwiringPi -Wall
