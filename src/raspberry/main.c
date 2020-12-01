@@ -1,6 +1,12 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <unistd.h>
+#include <fcntl.h>
+#include <termios.h>
+#include <errno.h>
+#include <pthread.h> 
+#include <sys/ioctl.h>
 #include <MQTTClient.h>
 #include <wiringPi.h>
 #include <wiringSerial.h>
@@ -16,11 +22,14 @@ MQTTClient client;
 void publish(MQTTClient client, char* topic, char* payload);
 int on_message(void *context, char *topicName, int topicLen, MQTTClient_message *message);
 void setLedStatus(int state);
+void *read_serial(void *vargp);
 
+// Turn led ON or OFF
 void setLedStatus(int state) {
     digitalWrite(0, !digitalRead(state));
 }
 
+// Publish MQTT topic
 void publish(MQTTClient client, char* topic, char* payload) {
     MQTTClient_message pubmsg = MQTTClient_message_initializer;
 
@@ -33,6 +42,7 @@ void publish(MQTTClient client, char* topic, char* payload) {
     MQTTClient_waitForCompletion(client, token, 1000L);
 }
 
+// Subscribe MQTT topic
 int on_message(void *context, char *topicName, int topicLen, MQTTClient_message *message) {
     char* payload = message->payload;
 
@@ -46,6 +56,40 @@ int on_message(void *context, char *topicName, int topicLen, MQTTClient_message 
     MQTTClient_free(topicName);
     return 1;
 }
+
+// Thread read serial
+void *read_serial(void *vargp) {
+    int sfd = open("/dev/serial0", O_RDWR | O_NOCTTY); 
+ 	if (sfd == -1) {
+ 		printf("Error no is : %d\n", errno);
+  		printf("Error description is : %s\n", strerror(errno));
+  		return (-1);
+ 	}
+
+ 	struct termios options;
+ 	tcgetattr(sfd, &options);
+
+	cfsetspeed(&options, B9600);
+	cfmakeraw(&options);
+
+	options.c_cflag &= ~CSTOPB;
+	options.c_cflag |= CLOCAL;
+	options.c_cflag |= CREAD;
+	options.c_cc[VTIME]=1; 
+	options.c_cc[VMIN]=100;
+
+	tcsetattr(sfd, TCSANOW, &options);
+	char buf2[100];
+    int bytes;
+
+    while(1) {
+        ioctl(sfd, FIONREAD, &bytes);
+        if(bytes!=0) {
+            count = read(sfd, buf2, 100);
+        }
+        printf("%s\n\r", buf2);
+    }
+} 
 
 int main(int argc, char *argv[])
 {
@@ -69,8 +113,12 @@ int main(int argc, char *argv[])
 
     MQTTClient_subscribe(client, MQTT_SUBSCRIBE_TOPIC, 0);
 
-    while(1)
-    {
+    pthread_t thread_id; 
+    pthread_create(&thread_id, NULL, read_serial, NULL); 
+
+    while(1) {
 
     }
+
+    pthread_join(thread_id, NULL); 
 }
