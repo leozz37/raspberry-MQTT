@@ -16,6 +16,8 @@ jobs:
     - name: Install dependencies
       working-directory: ./src/raspberry/scripts
       run: |
+        sudo apt update -y && sudo apt upgrade
+        sudo apt install -y cmake git sudo
         chmod +x ./install-deps.sh
         sudo ./install-deps.sh
 
