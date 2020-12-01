@@ -17,7 +17,7 @@ $ sudo apt install -y wiringpi cmake git
 Build the binary:
 
 ```shell
-$ gcc main.c -o mqtt_exemplo -lpaho-mqtt3c -I/usr/local/include -L/usr/local/lib -lwiringPi -Wall
+$ gcc main.c -o rasp -lpaho-mqtt3c -I/usr/local/include -L/usr/local/lib -lwiringPi -Wall
 ```
 
 ## Controle
