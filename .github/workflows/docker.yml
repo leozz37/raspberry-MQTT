@@ -9,7 +9,7 @@ jobs:
     name: Go
     runs-on: ubuntu-latest
     steps:
-    - name: Check out code into the Go module directory
+    - name: Checkout code repository
       uses: actions/checkout@v2
 
     - name: Build Go Image
