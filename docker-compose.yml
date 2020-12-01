@@ -9,3 +9,9 @@ services:
       PORT: 8000
     ports:
       - 8000:8000
+
+  broker:
+    image: eclipse-mosquitto
+    ports:
+      - 1883:1883
+      - 9001:9001
