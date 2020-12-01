@@ -62,7 +62,7 @@ void *read_serial(void *vargp) {
  	if (sfd == -1) {
  		printf("Error no is : %d\n", errno);
   		printf("Error description is : %s\n", strerror(errno));
-  		return (-1);
+        exit(-1);
  	}
 
  	struct termios options;
@@ -86,7 +86,7 @@ void *read_serial(void *vargp) {
         usleep(1000);
         ioctl(sfd, FIONREAD, &bytes);
         if(bytes!=0) {
-            count = read(sfd, buf2, 100);
+            read(sfd, buf2, 100);
         }
         printf("%s\n\r", buf2);
     }

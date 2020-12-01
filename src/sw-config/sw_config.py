@@ -1,5 +1,6 @@
 import serial
 
+
 class Config:
     def __init__(self):
         self.get_inputs()
@@ -15,7 +16,7 @@ class Config:
                   self.sensor_topic + ";" + self.refresh_time
         print(payload)
         print("Press enter to setup...")
-        
+
         ser = serial.Serial("/dev/tty0")
         payload_bytes = str.encode(payload)
         ser.write(payload_bytes)

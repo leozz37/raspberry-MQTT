@@ -16,4 +16,4 @@ cmake -Bbuild -H. -DPAHO_WITH_SSL=ON -DPAHO_ENABLE_TESTING=OFF
 cmake --build build/ --target install
 ldconfig
 cd ..
-rm -rf paho.mqqt.c
+rm -rf paho.mqtt.c
