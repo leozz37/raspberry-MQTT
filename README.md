@@ -34,7 +34,7 @@ You can run the `docker-compose`, with the following command:
 $ docker-compose up
 ```
 
-It will start the `REST API`
+It will start the **REST API** on the default port `8000` and the **Mosquitto Broker**. You can access the URLs to control the led and get sensor values.
 
 ## Raspberry Pi
 
