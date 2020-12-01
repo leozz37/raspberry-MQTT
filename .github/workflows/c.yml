@@ -21,4 +21,4 @@ jobs:
 
     - name: Build
       working-directory: ./src/raspberry
-      run: gcc main.c -o mqtt_exemplo -lpaho-mqtt3c -I/usr/local/include -L/usr/local/lib -lwiringPi -pthread -lpthread -Wall
+      run: gcc main.c -o mqtt_exemplo -lpaho-mqtt3c -I/usr/local/include -L/usr/local/lib -lwiringPi -pthread -lrt -lm -lcrypt -lpthread -Wall
