@@ -1,5 +1,6 @@
 # Raspberry MQTT Project
 
+![C](https://github.com/leozz37/raspberry-MQTT/workflows/C/badge.svg)
 ![Go](https://github.com/leozz37/raspberry-MQTT/workflows/Go/badge.svg)
 ![Python](https://github.com/leozz37/raspberry-MQTT/workflows/Python/badge.svg)
 ![Docker](https://github.com/leozz37/raspberry-MQTT/workflows/Docker/badge.svg)
