@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   control:
-    build: ./control
+    build: ./src/control
     image: leozz37/control
     container_name: control
     environment:
