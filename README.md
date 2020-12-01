@@ -34,7 +34,7 @@ It will start the `REST API`
 Build the binary:
 
 ```shell
-$ gcc main.c -o rasp -lpaho-mqtt3c -I/usr/local/include -L/usr/local/lib -lwiringPi -Wall
+$ gcc main.c -o mqtt_exemplo -lpaho-mqtt3c -I/usr/local/include -L/usr/local/lib -lwiringPi -pthread -lpthread -Wall
 ```
 
 Run the binary:
