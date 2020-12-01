@@ -13,7 +13,16 @@ services:
 
   broker:
     image: eclipse-mosquitto
+    container_name: mqtt-mosquitto
     network_mode: "host"
     ports:
       - 1883:1883
       - 9001:9001
+
+  sw-config:
+    build: ./src/sw-config
+    image: leozz37/sw-config
+    container_name: sw-config
+    network_mode: "host"
+    stdin_open: true
+    tty: true
