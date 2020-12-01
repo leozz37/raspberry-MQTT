@@ -17,8 +17,8 @@ class Config:
         print("Press enter to setup...")
         
         ser = serial.Serial("/dev/tty0")
-        ser.open()
-        ser.write(payload)
+        payload_bytes = str.encode(payload)
+        ser.write(payload_bytes)
 
 
 if __name__ == "__main__":

@@ -9,13 +9,12 @@
 #include <sys/ioctl.h>
 #include <MQTTClient.h>
 #include <wiringPi.h>
-#include <wiringSerial.h>
 
-#define MQTT_ADDRESS   "tcp://localhost:1883"
 #define CLIENTID       "Raspberrypi"
 
-#define MQTT_PUBLISH_TOPIC     "sensor"
-#define MQTT_SUBSCRIBE_TOPIC   "led"
+char* MQTT_ADDRESS = "tcp://localhost:1883";
+char* MQTT_PUBLISH_TOPIC = "sensor";
+char* MQTT_SUBSCRIBE_TOPIC = "led";
 
 MQTTClient client;
 
@@ -84,12 +83,14 @@ void *read_serial(void *vargp) {
     int count;
 
     while(1) {
+        usleep(1000);
         ioctl(sfd, FIONREAD, &bytes);
         if(bytes!=0) {
             count = read(sfd, buf2, 100);
         }
         printf("%s\n\r", buf2);
     }
+    close(sfd);
 } 
 
 int main(int argc, char *argv[])
@@ -117,9 +118,7 @@ int main(int argc, char *argv[])
     pthread_t thread_id; 
     pthread_create(&thread_id, NULL, read_serial, NULL); 
 
-    while(1) {
-
-    }
+    while(1) { }
 
     pthread_join(thread_id, NULL); 
 }

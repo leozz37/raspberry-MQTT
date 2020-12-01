@@ -26,3 +26,9 @@ services:
     network_mode: "host"
     stdin_open: true
     tty: true
+
+  raspberry:
+    build: ./src/raspberry
+    image: leozz37/raspberry
+    container_name: raspberry
+    network_mode: "host"
