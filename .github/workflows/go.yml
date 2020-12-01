@@ -1,0 +1,24 @@
+name: Go
+
+on:
+  push:
+    branches: [ master, develop ]
+  pull_request:
+    branches: [ master, develop ]
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: Check out code into the Go module directory
+      uses: actions/checkout@v2
+
+    - name: Get dependencies
+      working-directory: ./src/control
+      run: go mod download
+
+    - name: Build
+      working-directory: ./src/control
+      run: go build -v .
