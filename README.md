@@ -2,19 +2,30 @@
 
 ![cover](resources/images/infra.png)
 
-Raspberry MQTT example
+The project is separeted in four parts: 
 
-## Dependencies
+- An **API REST** in Golang to set the led state and read the sensor values;
+- An Eclipse Mosquitto **MQTT Broker**;
+- A C++ binary to read the sensor values and set the led state;
+- A Python script to set broker's `hostname`, `topics` and `sensor refresh rate`;
 
-You need both [Docker](https://www.docker.com/) and [docker-compose](https://docs.docker.com/compose/install/) installed on your Raspberry. If you are not using Docker, you need [Go](https://golang.org/doc/install) and [Mosquitto MQTT Broker](https://mosquitto.org/).
+All of them are inside a Docker, you can run with `docker-compose`.
 
-## Raspberry
+## Installing Dependencies
 
-Install these dependencies:
+You need both [Docker](https://www.docker.com/) and [docker-compose](https://docs.docker.com/compose/install/) installed on your Raspberry. If you are not using Docker, you need [Go](https://golang.org/doc/install), [GCC](https://gcc.gnu.org/), [Python3](https://www.python.org/download/releases/3.0/) and [Mosquitto MQTT Broker](https://mosquitto.org/).
+
+## Running
+
+You can run the `docker-compose`, with the following command:
 
 ```shell
-$ sudo apt install -y wiringpi cmake git
+$ docker-compose up
 ```
+
+It will start the `REST API`
+
+## Raspberry Pi
 
 Build the binary:
 
@@ -22,11 +33,15 @@ Build the binary:
 $ gcc main.c -o rasp -lpaho-mqtt3c -I/usr/local/include -L/usr/local/lib -lwiringPi -Wall
 ```
 
-## Controle
+Run the binary:
 
-### Running
+```shell
+$ ./rasp
+```
 
-To run do `Go` code, install the third party dependencies:
+## Control
+
+Install the third party dependencies:
 
 ```shell
 $ go mod download
@@ -54,10 +69,71 @@ $ export PORT=8000
 $ docker run -p $PORT:$PORT -e PORT=$PORT control
 ```
 
-### Docker compose
+### API Documentation
 
-To run all the project services, do the following:
+Endpoints:
+
+| Endpoint      | Request | Description      | Data type  |
+| ------------- | ------- | ---------------- | ---------- |
+| `/led/{state}`| GET     | Set led state    | bool (1/0) |
+| `/sensor`     | GET     | Get sensor value | -          |
+
+Examples:
+
+Turn led on:
 
 ```shell
-$ docker-compose up
+$ curl http://localhost/led/1
 ```
+
+Turn led off:
+
+```shell
+$ curl http://localhost/led/0
+```
+
+Get actual sensor value:
+
+```shell
+$ curl http://localhost/sensor
+```
+
+## SW-Configuration
+
+To run it, do the following:
+
+```shell
+$ python3 sw_config.py
+```
+
+### Docker
+
+To run the `Dockerfile`, build the image:
+
+```shell
+$ docker build . -t sw
+```
+
+To run it, do the following:
+
+```shell
+$ docker run -ti sw
+```
+
+## Eclipse Mosquitto
+
+To run the Broker image, do the following:
+
+```shell
+$ docker run -it -p 1883:1883 -p 9001:9001  eclipse-mosquitto
+```
+
+## Authors
+
+Made by:
+
+[Leonardo Augusto](https://github.com/leozz37)
+
+[Leonardo Andretta](https://github.com/LeoAndretta)
+
+**Under construction...**

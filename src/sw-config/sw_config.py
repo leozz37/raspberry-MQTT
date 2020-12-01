@@ -18,6 +18,7 @@ class Config:
         # ser.write(payload)
 
 if __name__ == "__main__":
+    print("SW-Config started")
     config = Config()
     while True:
         config.send_values()

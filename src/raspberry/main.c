@@ -3,6 +3,7 @@
 #include <string.h>
 #include <MQTTClient.h>
 #include <wiringPi.h>
+#include <wiringSerial.h>
 
 #define MQTT_ADDRESS   "tcp://localhost:1883"
 #define CLIENTID       "Raspberrypi"
