@@ -7,7 +7,9 @@ import (
 	"math/rand"
 	"net/http"
 	"os"
+	"time"
 
+	mqtt "github.com/eclipse/paho.mqtt.golang"
 	"github.com/gorilla/mux"
 	"github.com/joho/godotenv"
 )
@@ -15,6 +17,52 @@ import (
 // LedValue represents led on or off
 type LedValue struct {
 	State string `json:"state"`
+}
+
+func publish(client mqtt.Client, state string) {
+	token := client.Publish("led", 0, false, state)
+	token.Wait()
+	time.Sleep(time.Second)
+}
+
+func sub(client mqtt.Client) {
+	topic := "sensor"
+	token := client.Subscribe(topic, 1, nil)
+	token.Wait()
+	fmt.Printf("Subscribed to topic: %s", topic)
+}
+
+var messagePubHandler mqtt.MessageHandler = func(client mqtt.Client, msg mqtt.Message) {
+	fmt.Printf("Received message: %s from topic: %s\n", msg.Payload(), msg.Topic())
+}
+
+var connectHandler mqtt.OnConnectHandler = func(client mqtt.Client) {
+	fmt.Println("Connected")
+}
+
+var connectLostHandler mqtt.ConnectionLostHandler = func(client mqtt.Client, err error) {
+	fmt.Printf("Connect lost: %v", err)
+}
+
+// SetupMQTT setup broker
+func SetupMQTT() mqtt.Client {
+	var broker = "localhost"
+	var port = 1883
+
+	opts := mqtt.NewClientOptions()
+	opts.AddBroker(fmt.Sprintf("tcp://%s:%d", broker, port))
+	opts.SetClientID("control")
+	opts.SetUsername("control")
+	opts.SetPassword("public")
+	opts.SetDefaultPublishHandler(messagePubHandler)
+	opts.OnConnect = connectHandler
+	opts.OnConnectionLost = connectLostHandler
+	client := mqtt.NewClient(opts)
+	if token := client.Connect(); token.Wait() && token.Error() != nil {
+		panic(token.Error())
+	}
+
+	return client
 }
 
 // SetLedValue set the led status
@@ -28,12 +76,14 @@ func SetLedValue(w http.ResponseWriter, r *http.Request) {
 	ledValue.State = params["state"]
 
 	fmt.Fprintln(w, ledValue.State)
-	// TODO: Implement turning on LED
+
+	client := SetupMQTT()
+	publish(client, ledValue.State)
+	client.Disconnect(250)
 }
 
 // GetSensorValue returns the last sensor value
 func GetSensorValue(w http.ResponseWriter, r *http.Request) {
-	// TODO: Get sensor value
 	log.Println("GET from /sensor")
 	fmt.Fprintln(w, rand.Intn(30))
 }
