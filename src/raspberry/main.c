@@ -80,7 +80,6 @@ void *read_serial(void *vargp) {
 	tcsetattr(sfd, TCSANOW, &options);
 	char buf2[100];
     int bytes;
-    int count;
 
     while(1) {
         usleep(1000);
