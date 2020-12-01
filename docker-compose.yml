@@ -1,10 +1,11 @@
-version: "3.8"
+version: "3.3"
 
 services:
   control:
     build: ./src/control
     image: leozz37/control
     container_name: control
+    network_mode: "host"
     environment:
       PORT: 8000
     ports:
@@ -12,6 +13,7 @@ services:
 
   broker:
     image: eclipse-mosquitto
+    network_mode: "host"
     ports:
       - 1883:1883
       - 9001:9001

@@ -14,6 +14,11 @@ MQTTClient client;
 
 void publish(MQTTClient client, char* topic, char* payload);
 int on_message(void *context, char *topicName, int topicLen, MQTTClient_message *message);
+void setLedStatus(int state);
+
+void setLedStatus(int state) {
+    digitalWrite(0, !digitalRead(state));
+}
 
 void publish(MQTTClient client, char* topic, char* payload) {
     MQTTClient_message pubmsg = MQTTClient_message_initializer;
@@ -39,10 +44,6 @@ int on_message(void *context, char *topicName, int topicLen, MQTTClient_message 
     MQTTClient_freeMessage(&message);
     MQTTClient_free(topicName);
     return 1;
-}
-
-void setLedStatus(int state) {
-    digitalWrite(0, !digitalRead(state));
 }
 
 int main(int argc, char *argv[])
