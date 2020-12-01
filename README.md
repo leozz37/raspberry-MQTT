@@ -6,6 +6,32 @@ Raspberry MQTT example
 
 You need both [Docker](https://www.docker.com/) and [docker-compose](https://docs.docker.com/compose/install/) installed on your Raspberry. If you are not using Docker, you need [Go](https://golang.org/doc/install) and [Mosquitto MQTT Broker](https://mosquitto.org/).
 
+## Raspberry
+
+Install these dependencies:
+
+```shell
+$ sudo apt install -y wiringpi cmake git
+```
+
+Create a build directory:
+
+```shell
+$ mkdir build && cd build
+```
+
+Build the binary:
+
+```shell
+$ cmake .. && make -j8
+```
+
+Run the binary:
+
+```shell
+$ ./raspberry
+```
+
 ## Controle
 
 ### Running
