@@ -16,8 +16,8 @@ jobs:
     - name: Install dependencies
       working-directory: ./src/raspberry/scripts
       run: |
-        sudo chmod +x ./install-deps.sh
-        ./install-deps.sh
+        chmod +x ./install-deps.sh
+        sudo ./install-deps.sh
 
     - name: Build
       working-directory: ./src/raspberry
