@@ -1,5 +1,8 @@
 # Raspberry MQTT Project
 
+![Go](https://github.com/leozz37/raspberry-MQTT/workflows/Go/badge.svg)
+![Docker](https://github.com/leozz37/raspberry-MQTT/workflows/Docker/badge.svg)
+
 ![cover](resources/images/infra.png)
 
 The project is separeted in four parts: 
