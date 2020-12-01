@@ -1,4 +1,4 @@
-# import serial
+import serial
 
 class Config:
     def __init__(self):
@@ -15,8 +15,10 @@ class Config:
                   self.sensor_topic + ";" + self.refresh_time
         print(payload)
         print("Press enter to setup...")
-        # ser = serial.Serial("/dev/ttyS0", 9600)
-        # ser.write(payload)
+        
+        ser = serial.Serial("/dev/tty0")
+        ser.open()
+        ser.write(payload)
 
 
 if __name__ == "__main__":

@@ -59,7 +59,7 @@ int on_message(void *context, char *topicName, int topicLen, MQTTClient_message 
 
 // Thread read serial
 void *read_serial(void *vargp) {
-    int sfd = open("/dev/serial0", O_RDWR | O_NOCTTY); 
+    int sfd = open("/dev/tty0", O_RDWR | O_NOCTTY); 
  	if (sfd == -1) {
  		printf("Error no is : %d\n", errno);
   		printf("Error description is : %s\n", strerror(errno));
