@@ -1,5 +1,7 @@
 # Raspberry MQTT Project
 
+![cover](resources/images/infra.png)
+
 Raspberry MQTT example
 
 ## Dependencies
