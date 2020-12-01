@@ -21,4 +21,4 @@ jobs:
 
     - name: Build
       working-directory: ./src/raspberry
-      run: gcc main.c -o rasp -lpaho-mqtt3c -I/usr/local/include -L/usr/local/lib -lwiringPi -Wall
+      run: sudo gcc main.c -o rasp -lpaho-mqtt3c -I/usr/local/include -L/usr/local/lib -lwiringPi -Wall
